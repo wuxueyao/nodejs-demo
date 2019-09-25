@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 const fs= require('fs'),
-      log = console.log,
+      //log = console.log,
       http = require('http');
 
 var data = fs.readFileSync('./qr-code.jpg').toString('base64');
@@ -19,7 +19,7 @@ var html = ''
   + '<body>'
     + '<img src = "data:image/jpg;base64,'+data+'">'
   + '</body>'
-  + '</html>'
-  http.createServer((req,res)=>{
-    res.end(html);
-  }).listen(8080);
+  + '</html>';
+http.createServer((req,res)=>{
+  res.end(html);
+}).listen(8080);

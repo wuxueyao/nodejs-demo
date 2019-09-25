@@ -1,7 +1,6 @@
 #!/usr/bin/node
 
-const file = process.argv[2] || __filename,
-      fs = require('fs'),
+const fs = require('fs'),
       src = process.argv[2],
       dst = process.argv[3];
 

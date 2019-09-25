@@ -2,7 +2,7 @@
 const user = {
   name:'王顶',
   age:41,
-  qq;'408542507'
+  qq:'408542507'
 };
 
 const log = console.log;

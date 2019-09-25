@@ -12,4 +12,4 @@ process.stdin.on('data',function(data){
 
 process.stdin.on('end',function(){
   console.log(me);
-})
+});

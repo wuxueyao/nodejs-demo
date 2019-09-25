@@ -12,7 +12,7 @@ function Radio(station){
   },0);
 
   setTimeout(()=>{
-    self.emit('stop',station)
+    self.emit('stop',station);
   },5000);
 }
 

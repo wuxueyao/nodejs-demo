@@ -9,7 +9,7 @@ source.pipe(process.stdout);
 
 source.on('error',function(err){
   console.error(err.message);
-})
+});
 
 //上边两句和这个一样，这个无法捕获异常
 //fs.createReadStream(file).pipe(process.stdout);

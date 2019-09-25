@@ -15,6 +15,6 @@ zangao.on('bark',function(){
 
 //可以直接zangao.on('bark',onBark);
 
-function onBark(){
-  console.log('%s barked! energy:%s',this.getName(),this.getEnergy());
-}
+//function onBark(){
+//  console.log('%s barked! energy:%s',this.getName(),this.getEnergy());
+//}

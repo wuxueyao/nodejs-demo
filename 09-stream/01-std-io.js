@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 const stdin = process.stdin,
-      stdout = process.stdout
+      stdout = process.stdout;
 
 stdin.resume();
 //从暂停状态处于流动状态
