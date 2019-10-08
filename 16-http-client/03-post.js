@@ -11,7 +11,7 @@ option.method = 'POST';
 
 
 
-var req = http.request(addr,function(res){
+var req = http.request(option,function(res){
   //print start line
   console.log(`HTTP/${res.httpVersion} ${res.statusCode} ${res.statusMessage}`);
   
