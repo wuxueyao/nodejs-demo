@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/wuxueyao/nodejs-demo/issues"
   },
-  "homepage": "https://github.com/wuxueyao/nodejs-demo#readme"
+  "homepage": "https://github.com/wuxueyao/nodejs-demo#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3"
+  }
 }
