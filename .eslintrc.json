@@ -35,7 +35,7 @@
         ],
         "no-unused-vars":0,
         "no-undef":0,
-        "doctype-firsti":0
-     
+        "doctype-firsti":0，
+        "quotes":0
     }
 }
