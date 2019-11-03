@@ -60,7 +60,7 @@ http.createServer((req,res)=>{
       select(req,res);
       break;
     case 'POST':
-      postFun(req,res);
+      select(req,res);
       break;
     default:
       break;
@@ -70,38 +70,22 @@ http.createServer((req,res)=>{
 
 function select(req,res){
   var path = url.parse(req.url).pathname;
-  var pq = url.parse(req.url).query;
-  var iq = qs.parse(pq);
-  var file = __dirname;
-  var fileitem = [];
-  log(url);
-  log("path:"+path);
-  log("pq:"+pq);
-  log("file:"+file);
-  log("fileitem:"+fileitem)
-  log('iq:',iq);
-  
-  if(iq.chapterId && pq != null){
-    var text = JSON.stringify(chapterList[iq.chapterId-1]);
-    res.setHeader('Content-Length',Buffer.byteLength(text));
-    res.setHeader('Content-Type','text/plain;charset="utf-8"');
-    res.setHeader('Access-Content-Allow-Origin','*');
-    log('last')
-    res.end(text);
-    log('last')
-  }
-
+  var name = '';
   switch(path){
     case '/list/':
-      file += '/chapterList.html';
+      if(req.method === 'GET'){
+        name = 'chapterList.html';
+        show(res,name);
+        break;
+      }else if(req.method === 'POST'){
+
+      }
       break;
     case '/login/':
-      file += '/login.html';
-      /*var f = file;
       if(req.method === 'GET'){
-        file = f+ '/login.html';
-      }
-      if(req.method === 'POST' && req.url ==='/login/'){
+        name = 'login.html';
+        show(res,name);
+      }else if(req.method === 'POST'){
         var user = '';
         req.on('data',(data)=>{
           return user += data;
@@ -110,123 +94,23 @@ function select(req,res){
           var account = qs.parse(user);
           if(account.username === 'admin' && account.password === 'admin'){
             log('user:%s,password:%s',account.username,account.password);
-            log('账号密码正确，登录成功！');
-            path = '/listmanager/';
-            file = f+ '/list.html';
-            
+            log('true');
           }else{
-            file = f+ '/login.html';
-            log('账号或者密码输入有误，登录失败！')
+            log('false');
           }
         })
-      }
-      if(req.method === 'POST'){
-        file = file;
-      }*/
-      break;
-    case '/listmanager/':
-      file += '/list.html/';
-      break;
-    case '/addChapter/':
-      file += '/addChapter.html';
-      break;
-    default:
-      var fq = req.url.split('?')[0];
-      log("fq:"+fq);
-      log("file:"+file)
-      fileitem = fq.split('/');
-      log("fileitem:"+fileitem)
-      for(var i=2;i<fileitem.length;i++){
-        var name = '/'+fileitem[i];
-        file += name; 
+
       }
       break;
-  }
-
-  fs.readFile(file,(err,text)=>{
-    if(err){
-      log(err.message);
-      res.statusCode = 404;
-      res.end(err.message);
-    }else{
-      res.writeHead(200,{
-        'Content-Type':'text/html'
-      });
-      res.writeHead(200,{
-        'Content-Type':'text/css'
-      });
-      res.WriteHead(200,{
-        'Content-Type':'text/js'
-      });
-      res.end(text);
-    }
-  });
-}
-
-function postFun(req,res){
-  var name = '';
-  if(req.url == '/login/'){
-    req.on('data',(data)=>{
-      name += data;
-    });
-    req.on('end',()=>{
-      var account = qs.parse(name);
-      log(account);
-      log(account.username,account.password);
-      if(account.username == 'admin' && account.password == 'admin'){
-        log(account.username,account.password);
-        log('登录成功！');
-        show(res,'/addChapter/');
-
-      }else{
-        log('登陆失败！');
-        show(res,'/login/');
-      }
-    })
-  }
-    
-    
-
-
-  if(req.url == '/add'){
-    req.on('data',(d)=>{
-      name += data;
-    });
-    req.on('end',()=>{
-      name = qs.parse(name.toString('utf8'));
-      var newText = new CreateText(name.title,name.content);
-      chapterList.push(newText);
-      log(chapterList[chapterList.length-1]);
-    });
-    res.end('OK');
   }
 }
 
 function show(res,name){
-  var files = '';
-  switch(name){
-    case '/addChapter/':
-      files += 'addChapter.html';
-      break;
-    default:
-      files += 'login.html';
-      break;
-  }
-  var html = fs.readFileSync(files).toString('utf8');
+  var html = fs.readFileSync(name).toString('utf8');
   res.setHeader('Content-Type','text/html');
   res.setHeader('Content-Length',Buffer.byteLength(html));
   res.statusCode = 200;
-  res.end(html);
+  res.end(text);
 }
 
-/*function add(chapterName,chapterContent,chapterId,imgPath,chapterDes,publishTimer,author,views){
-  var obj = new Object();
-  obj.chapterId = chapterList.length+1;
-  obj.chapterName = chapterName;
-  obj.imgPath = imgPath || undefined;
-  obj.chapterDes = chapterDes || undefined;
-  obj.chapterContent = chapterContent;
-  obj.publishTimer = new Date().getTime();
-  obj.author = view || undefined;
-  return obj;
-}*/
+          

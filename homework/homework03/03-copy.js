@@ -13,7 +13,7 @@ http.createServer((req,res)=>{
       res.writeHead(200,{
         'Content-Type':'text/html'
       });
-      select(req,res);
+     select(req,res);
       break;
     case 'POST':
       var it = '';
