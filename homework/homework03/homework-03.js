@@ -74,12 +74,19 @@ function select(req,res){
   var iq = qs.parse(pq);
   var file = __dirname;
   var fileitem = [];
-  log(url);
-  log("path:"+path);
+  //log(url);
+  log(req.url);
+  log("path1:"+path);
   log("pq:"+pq);
   log("file:"+file);
   log("fileitem:"+fileitem)
   log('iq:',iq);
+
+  if(path.split('/')[2] === 'bg.jpg'){
+    log("path2:"+path)
+    return;
+  }
+  log("path3:"+path)
   
   if(iq.chapterId && pq != null){
     var text = JSON.stringify(chapterList[iq.chapterId-1]);
@@ -97,32 +104,6 @@ function select(req,res){
       break;
     case '/login/':
       file += '/login.html';
-      /*var f = file;
-      if(req.method === 'GET'){
-        file = f+ '/login.html';
-      }
-      if(req.method === 'POST' && req.url ==='/login/'){
-        var user = '';
-        req.on('data',(data)=>{
-          return user += data;
-        });
-        req.on('end',()=>{
-          var account = qs.parse(user);
-          if(account.username === 'admin' && account.password === 'admin'){
-            log('user:%s,password:%s',account.username,account.password);
-            log('账号密码正确，登录成功！');
-            path = '/listmanager/';
-            file = f+ '/list.html';
-            
-          }else{
-            file = f+ '/login.html';
-            log('账号或者密码输入有误，登录失败！')
-          }
-        })
-      }
-      if(req.method === 'POST'){
-        file = file;
-      }*/
       break;
     case '/listmanager/':
       file += '/list.html/';
@@ -138,8 +119,10 @@ function select(req,res){
       log("fileitem:"+fileitem)
       for(var i=2;i<fileitem.length;i++){
         var name = '/'+fileitem[i];
+        log('name:'+name);
         file += name; 
       }
+      log('last:'+file);
       break;
   }
 
@@ -151,12 +134,6 @@ function select(req,res){
     }else{
       res.writeHead(200,{
         'Content-Type':'text/html'
-      });
-      res.writeHead(200,{
-        'Content-Type':'text/css'
-      });
-      res.WriteHead(200,{
-        'Content-Type':'text/js'
       });
       res.end(text);
     }
@@ -177,21 +154,18 @@ function postFun(req,res){
         log(account.username,account.password);
         log('登录成功！');
         show(res,'/addChapter/');
-
       }else{
         log('登陆失败！');
         show(res,'/login/');
       }
     })
   }
-    
-    
 
-
-  if(req.url == '/add'){
-    req.on('data',(d)=>{
+  if(req.url === '/add'){
+    req.on('data',(data)=>{
       name += data;
     });
+    log(name)
     req.on('end',()=>{
       name = qs.parse(name.toString('utf8'));
       var newText = new CreateText(name.title,name.content);

@@ -11,7 +11,7 @@ http.createServer((req,res)=>{
   if(req.url === '/favicon.ico'){
     return;
   }
-  log('I haved %d times'.total++);
+  log('I haved %d times',total++);
   var count = 1;
   if(typeof req.headers.cookie !== 'undefined'){
     //parse cookie
